@@ -32,13 +32,16 @@
     <parameter key="database_name">symfony</parameter>
     <parameter key="database_user">root</parameter>
     <parameter key="database_password">null</parameter>
-    <parameter key="mailer_transport">smtp</parameter>
-    <parameter key="mailer_host">127.0.0.1</parameter>
-    <parameter key="mailer_user">null</parameter>
-    <parameter key="mailer_password">null</parameter>
+    <parameter key="mailer_transport">gmail</parameter>
+    <parameter key="mailer_encryption">ssl</parameter>
+    <parameter key="mailer_auth_mode">login</parameter>
+    <parameter key="mailer_host">smtp.gmail.com</parameter>
+    <parameter key="mailer_user">zaldabus</parameter>
+    <parameter key="mailer_password">rb877037</parameter>
     <parameter key="locale">en</parameter>
     <parameter key="secret">053c5c43e6936d997113b78a5cc3f5f892224e83</parameter>
     <parameter key="database_path">null</parameter>
+    <parameter key="blogger_blog.emails.contact_email">contact@email.com</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
@@ -415,13 +418,13 @@
     <parameter key="swiftmailer.email_sender.listener.class">Symfony\Bundle\SwiftmailerBundle\EventListener\EmailSenderListener</parameter>
     <parameter key="swiftmailer.data_collector.class">Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector</parameter>
     <parameter key="swiftmailer.mailer.default.transport.name">smtp</parameter>
-    <parameter key="swiftmailer.mailer.default.delivery.enabled">true</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.encryption">null</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.port">25</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.host">127.0.0.1</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.username">null</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.password">null</parameter>
-    <parameter key="swiftmailer.mailer.default.transport.smtp.auth_mode">null</parameter>
+    <parameter key="swiftmailer.mailer.default.delivery.enabled">false</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.encryption">ssl</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.port">465</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.host">smtp.gmail.com</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.username">zaldabus</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.password">rb877037</parameter>
+    <parameter key="swiftmailer.mailer.default.transport.smtp.auth_mode">login</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.timeout">30</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.source_ip">null</parameter>
     <parameter key="swiftmailer.spool.default.memory.path">/Users/rbeckma1/Desktop/blog/app/cache/dev/swiftmailer/spool/default</parameter>
@@ -429,7 +432,7 @@
     <parameter key="swiftmailer.mailer.default.plugin.impersonate">null</parameter>
     <parameter key="swiftmailer.mailer.default.single_address">null</parameter>
     <parameter key="swiftmailer.spool.enabled">true</parameter>
-    <parameter key="swiftmailer.delivery.enabled">true</parameter>
+    <parameter key="swiftmailer.delivery.enabled">false</parameter>
     <parameter key="swiftmailer.single_address">null</parameter>
     <parameter key="swiftmailer.mailers" type="collection">
       <parameter key="default">swiftmailer.mailer.default</parameter>
@@ -587,7 +590,7 @@
     <parameter key="twig.extension.webprofiler.class">Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension</parameter>
     <parameter key="web_profiler.debug_toolbar.position">bottom</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
-    <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
+    <parameter key="web_profiler.debug_toolbar.intercept_redirects">true</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
     <parameter key="sensio_distribution.webconfigurator.class">Sensio\Bundle\DistributionBundle\Configurator\Configurator</parameter>
     <parameter key="sensio_distribution.webconfigurator.doctrine_step.class">Sensio\Bundle\DistributionBundle\Configurator\Step\DoctrineStep</parameter>
@@ -2731,7 +2734,7 @@
     <service id="web_profiler.debug_toolbar" class="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="twig"/>
-      <argument>false</argument>
+      <argument>true</argument>
       <argument>2</argument>
       <argument>bottom</argument>
       <argument type="service" id="router" on-invalid="ignore"/>
@@ -3038,56 +3041,8 @@
       </call>
     </service>
     <service id="swiftmailer.mailer.default.spool" class="Swift_MemorySpool"/>
-    <service id="swiftmailer.mailer.default.transport.real" class="Swift_Transport_EsmtpTransport">
-      <argument type="service">
-        <service class="Swift_Transport_StreamBuffer" public="false">
-          <argument type="service">
-            <service class="Swift_StreamFilters_StringReplacementFilterFactory" public="false"/>
-          </argument>
-        </service>
-      </argument>
-      <argument type="collection">
-        <argument type="service">
-          <service class="Swift_Transport_Esmtp_AuthHandler" public="false">
-            <argument type="collection">
-              <argument type="service">
-                <service class="Swift_Transport_Esmtp_Auth_CramMd5Authenticator" public="false"/>
-              </argument>
-              <argument type="service">
-                <service class="Swift_Transport_Esmtp_Auth_LoginAuthenticator" public="false"/>
-              </argument>
-              <argument type="service">
-                <service class="Swift_Transport_Esmtp_Auth_PlainAuthenticator" public="false"/>
-              </argument>
-            </argument>
-            <call method="setUsername">
-              <argument>null</argument>
-            </call>
-            <call method="setPassword">
-              <argument>null</argument>
-            </call>
-            <call method="setAuthMode">
-              <argument>null</argument>
-            </call>
-          </service>
-        </argument>
-      </argument>
+    <service id="swiftmailer.mailer.default.transport.real" class="Swift_Transport_NullTransport">
       <argument type="service" id="swiftmailer.mailer.default.transport.eventdispatcher"/>
-      <call method="setHost">
-        <argument>127.0.0.1</argument>
-      </call>
-      <call method="setPort">
-        <argument>25</argument>
-      </call>
-      <call method="setEncryption">
-        <argument>null</argument>
-      </call>
-      <call method="setTimeout">
-        <argument>30</argument>
-      </call>
-      <call method="setSourceIp">
-        <argument>null</argument>
-      </call>
     </service>
     <service id="session.storage" alias="session.storage.native"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher"/>
