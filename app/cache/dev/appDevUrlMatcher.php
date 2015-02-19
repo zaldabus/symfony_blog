@@ -142,23 +142,31 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
         not_BloggerBlogBundle_homepage:
 
-        if (0 === strpos($pathinfo, '/a')) {
-            // BloggerBlogBundle_about
-            if ($pathinfo === '/about') {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_BloggerBlogBundle_about;
-                }
-
-                return array (  '_controller' => 'Blogger\\BlogBundle\\Controller\\PageController::aboutAction',  '_route' => 'BloggerBlogBundle_about',);
-            }
-            not_BloggerBlogBundle_about:
-
-            // homepage
-            if ($pathinfo === '/app/example') {
-                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+        // BloggerBlogBundle_about
+        if ($pathinfo === '/about') {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_BloggerBlogBundle_about;
             }
 
+            return array (  '_controller' => 'Blogger\\BlogBundle\\Controller\\PageController::aboutAction',  '_route' => 'BloggerBlogBundle_about',);
+        }
+        not_BloggerBlogBundle_about:
+
+        // BloggerBlogBundle_contact
+        if ($pathinfo === '/contact') {
+            if (!in_array($this->context->getMethod(), array('GET', 'POST', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'POST', 'HEAD'));
+                goto not_BloggerBlogBundle_contact;
+            }
+
+            return array (  '_controller' => 'Blogger\\BlogBundle\\Controller\\PageController::contactAction',  '_route' => 'BloggerBlogBundle_contact',);
+        }
+        not_BloggerBlogBundle_contact:
+
+        // homepage
+        if ($pathinfo === '/app/example') {
+            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
         }
 
         // hello
